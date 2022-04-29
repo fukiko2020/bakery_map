@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "bakery_map"
+version = "0.1.0"
+description = ""
+authors = ["fkk <kinako.fukiko.0822@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+dj-database-url = "^0.5.0"
+Django = "^4.0.4"
+python-dotenv = "^0.20.0"
+pipeline = "^0.1"
+django-pipeline = "^2.0.8"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

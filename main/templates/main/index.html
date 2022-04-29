@@ -1,0 +1,36 @@
+{% load static %}
+{% load sass_tags %}
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% sass_src 'main/css/reset.scss' %}">
+    <link rel="stylesheet" href="{% sass_src 'main/css/base.scss' %}">
+
+
+
+
+    {% block extra_style %}{% endblock %}
+    <title>DefInit</title>
+</head>
+
+<body>
+    {% block header %}
+    {% endblock header %}
+    <main class="main">
+        <div class="main-container">
+            <div class="main-container__contents">
+                {% block menubar %}
+                {% endblock menubar %}
+                {% block contents %}
+                {% endblock contents %}
+            </div>
+        </div>
+    </main>
+    {% block javascript %}{% endblock javascript %}
+</body>
+
+</html>

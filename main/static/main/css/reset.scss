@@ -1,0 +1,54 @@
+/*
+html5doctor.com Reset Stylesheet
+v1.6.1
+Last Updated: 2010-09-17
+Author: Richard Clark - http://richclarkdesign.com
+Twitter: @rich_clark
+*/
+
+html, body, div, span,
+h1, h2, h3, p,
+img,
+li,
+fieldset, form, label,
+article,
+footer, header{
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+    font-weight: normal;
+}
+
+body {
+    line-height:1;
+}
+
+article,
+footer,header{
+    display:block;
+}
+
+a {
+    margin:0;
+    padding:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+/* change colours to suit your needs */
+
+input, select {
+    vertical-align:middle;
+}
+blockquote{
+    font-size: 11px;
+    color: #777;
+    margin-left: 2px;
+    padding-left: 10px;
+    border-left: 5px solid #ddd;
+}
