@@ -33,7 +33,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "allauth",
     "allauth.account",
-    "pipeline",
+    "allauth.socialaccount",
+    "sass_processor",
 ]
 
 MIDDLEWARE = [
@@ -51,7 +52,10 @@ ROOT_URLCONF = "bakery_map.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [
+            BASE_DIR / "main/templates/",
+            BASE_DIR / "templates"
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -81,16 +85,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",  # noqa: E501
     },
     {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",  # noqa: E501
     },
     {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",  # noqa: E501
     },
     {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",  # noqa: E501
     },
 ]
 
@@ -112,8 +116,17 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "sass_processor.finders.CssFinder",
     "pipeline.finders.PipelineFinder",
 ]
+
+STATICFILES_DIRS = [BASE_DIR / 'main/static']
+
+SASS_PROCESSOR_ROOT = BASE_DIR / "static"
+SASS_PROCESSOR_INCLUDE_FILE_PATTERN = r'^.+\.(sass|scss)$'
+SASS_PRECISION = 8
+SASS_OUTPUT_STYLE = "compressed"
+SASS_TEMPLATE_EXTS = [".html", ".haml"]
 
 # User-uploaded files
 
@@ -150,7 +163,7 @@ ADMINS = list(
     )
 )
 
-# django-pipeline (https://django-pipeline.readthedocs.io/en/stable/configuration.html)
+# django-pipeline (https://django-pipeline.readthedocs.io/en/stable/configuration.html)  # noqa: E501
 
 PIPELINE = {
     "COMPILERS": [
@@ -165,10 +178,15 @@ PIPELINE = {
     "STYLESHEETS": {
         # "style": {
         #     "source_filenames": [
-        #         "app_name/css/style.scss",
+        #         "main/css/reset.scss",
+        #         "main/css/index.scss"
         #     ],
-        #     "output_filename": "app_name/css/style.css",
+        #     "output_filename": "main/css/style.css",
         # },
     },
     "JAVASCRIPT": {},
 }
+
+# ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VARIFICATION = "mandatory"
