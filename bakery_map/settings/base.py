@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "sass_processor",
+    "main",
 ]
 
 MIDDLEWARE = [
@@ -188,5 +189,7 @@ PIPELINE = {
 }
 
 # ACCOUNT_AUTHENTICATION_METHOD = "email"
+AUTH_USER_MODEL = "main.CustomUser"
+ACCOUNT_FORMS = {"signup": "main.forms.SignupForm"}
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VARIFICATION = "mandatory"
