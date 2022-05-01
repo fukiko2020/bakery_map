@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block extra_style %}
+
+{% endblock extra_style %}
+
+{% block contents %}
+<div class="map__wrapper"></div>
+<form action="" method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">投稿する</button>
+</form>
+{% endblock contents %}
+
+{% block javascript %}
+{% endblock javascript %}
