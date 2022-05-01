@@ -5,10 +5,7 @@
 {% endblock extra_style %}
 
 {% block contents %}
-<h1>レビュー投稿</h1>
-<div class="map__wrapper">
-
-</div>
+<div class="map__wrapper"></div>
 <form action="" method="POST">
   {% csrf_token %}
   {{ form.as_p }}

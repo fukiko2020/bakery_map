@@ -6,6 +6,28 @@
 
 {% block contents %}
 <div class="map__wrapper">lll</div>
+<a href="{% url 'main:create_bakery' %}">新しいベーカリーを追加</a>
+<a href="{% url 'main:create_review' %}">新しいレビューを投稿</a>
+
+<h2>最新のレビュー</h2>
+<div>
+  {% for review in review_list %}
+    <div>
+      <div>{{ review.user }}</div>
+      <div>{{ review.bakery.name }}</div>
+      <div>{{ review.pub_date|date:"Y.n.j G:i" }}</div>
+      <div>{{ review.comment|truncatechars:50 }}</div>
+    </div>
+    <hr>
+  {% endfor %}
+</div>
+
+<h2>人気のベーカリー</h2>
+<div>
+  {% for bakery in bakery_list %}
+    <div>{{ bakery }}</div>
+  {% endfor %}
+</div>
 {% endblock contents %}
 
 {% block javascript %}
