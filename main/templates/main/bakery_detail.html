@@ -1,0 +1,36 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block extra_style %}
+
+{% endblock extra_style %}
+
+{% block contents %}
+<div class="map__wrapper" id="map"></div>
+<h1>{{ bakery }}</h1>
+<h1>{{bakery.longitude }}</h1>
+<p>{{bakery.latitude}}</p>
+{% endblock contents %}
+
+{% block javascript %}
+<script>
+  const bakeryLat = Number("{{ bakery.latitude | escapejs }}");
+  const bakeryLng = Number("{{ bakery.longitude | escapejs }}");
+  function initMap() {
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 14,
+      center: {
+        lat: bakeryLat,
+        lng: bakeryLng,
+      },
+    });
+    new google.maps.Marker({
+        position: {
+          lat: bakeryLat,
+          lng: bakeryLng,
+        },
+        map: map,
+      })
+  }
+</script>
+<script src="{{ map_src }}"></script>
+{% endblock javascript %}

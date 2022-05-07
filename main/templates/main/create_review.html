@@ -6,11 +6,9 @@
 
 {% block contents %}
 <h1>レビュー投稿</h1>
-<div class="map__wrapper">
-
-</div>
 <form action="" method="POST">
   {% csrf_token %}
+  <a href="{% url 'main:create_bakery' %}">ベーカリーを追加</a>
   {{ form.as_p }}
   <button type="submit">投稿する</button>
 </form>

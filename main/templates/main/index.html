@@ -5,7 +5,7 @@
 {% endblock extra_style %}
 
 {% block contents %}
-<div class="map__wrapper">lll</div>
+<div class="map__wrapper" id="map"></div>
 <a href="{% url 'main:create_bakery' %}">新しいベーカリーを追加</a>
 <a href="{% url 'main:create_review' %}">新しいレビューを投稿</a>
 
@@ -14,7 +14,7 @@
   {% for review in review_list %}
     <div>
       <div>{{ review.user }}</div>
-      <div>{{ review.bakery.name }}</div>
+      <div><a href="{% url 'main:bakery_detail' review.bakery.id %}">{{ review.bakery.name }}</a></div>
       <div>{{ review.pub_date|date:"Y.n.j G:i" }}</div>
       <div>{{ review.comment|truncatechars:50 }}</div>
     </div>
@@ -31,4 +31,38 @@
 {% endblock contents %}
 
 {% block javascript %}
+<script>
+  function initMap() {
+    const bakeryList = JSON.parse('{{ bakery_list_json|escapejs }}');
+    console.log("list:", bakeryList)
+    const markers = [];
+    const myLatLng = { lat: 35.044, lng: 135.786};
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 13,
+      center: myLatLng,
+    });
+
+    console.log("aaasdf")
+    for (const bakery of bakeryList) {
+      const lat = bakery.fields.latitude;
+      const lng = bakery.fields.longitude;
+      console.log("position:", lat, lng);
+
+      // マーカー刺す
+      markers.push(new google.maps.Marker({
+        position: {
+          lat: lat,
+          lng: lng,
+        },
+        map: map,
+      }));
+    }
+
+    console.log("q");
+    // for (let i=0; i<num; i++) {
+    //   markers[i].add
+    // }
+  }
+</script>
+<script src="{{ map_src }}"></script>
 {% endblock javascript %}

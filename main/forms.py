@@ -17,4 +17,4 @@ class ReviewForm(forms.ModelForm):
 class CreateBakeryForm(forms.ModelForm):
     class Meta:
         model = Bakery
-        fields = ("name", "longitude", "latitude")
+        fields = ("name", "longitude", "latitude", "info")

@@ -7,7 +7,7 @@ app_name = "main"
 urlpatterns = [
     path("", views.IndexView.as_view(), name="index"),
     path(
-        "bakery_detail/<int:pk>",
+        "detail/bakery/<int:pk>",
         views.BakeryDetailView.as_view(),
         name="bakery_detail",
     ),
