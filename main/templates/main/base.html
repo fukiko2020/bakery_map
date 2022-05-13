@@ -15,6 +15,24 @@
 
 <body>
     {% block header %}
+    <header class="header">
+      <a href="{% url 'main:index' %}">
+        <div class="header__title">パンなび！</div>
+      </a>
+
+      <div class="header__nav">
+
+        {% if request.user.is_authenticated %}
+          <a href="{% url 'main:create_bakery' %}" class="header__button header__button--orange"><span>ベーカリーを追加</span></a>
+          <a href="{% url 'main:create_review' %}" class="header__button header__button--orange"><span>レビューを投稿する</span></a>
+          <a href="{#% url 'main:favorite_list' %#}" class="header__button header__button--orange"><span>お気に入りのお店</span></a>
+          <a href="{% url 'account_logout' %}" class="header__button header__button--red"><span>ログアウト</span></a>
+        {% else %}
+          <a href="{% url 'account_login' %}" class="header__button header__button--orange"><span>ログイン</span></a>
+          <a href="{% url 'account_signup' %}" class="header__button header__button--orange"><span>会員登録</span></a>
+        {% endif %}
+      </div>
+    </header>
     {% endblock header %}
     <main class="main">
         <div class="main-container">

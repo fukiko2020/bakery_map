@@ -193,3 +193,4 @@ AUTH_USER_MODEL = "main.CustomUser"
 ACCOUNT_FORMS = {"signup": "main.forms.SignupForm"}
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VARIFICATION = "mandatory"
+LOGIN_REDIRECT_URL = ""

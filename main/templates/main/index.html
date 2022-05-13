@@ -6,10 +6,8 @@
 
 {% block contents %}
 <div class="map__wrapper" id="map"></div>
-<a href="{% url 'main:create_bakery' %}">新しいベーカリーを追加</a>
-<a href="{% url 'main:create_review' %}">新しいレビューを投稿</a>
 
-<h2>最新のレビュー</h2>
+<div class="index-review">最新のレビュー</div>
 <div>
   {% for review in review_list %}
     <div>

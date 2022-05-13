@@ -1,0 +1,8 @@
+$orange8: #ffa925;
+
+@mixin centerd {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
