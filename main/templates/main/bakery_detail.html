@@ -9,6 +9,7 @@
 <h1>{{ bakery }}</h1>
 <p>{{bakery.longitude }}</p>
 <p>{{bakery.latitude}}</p>
+<a href="{% url 'main:create_favorite' bakery.pk %}">お気に入りに保存</a>
 {% endblock contents %}
 
 {% block javascript %}

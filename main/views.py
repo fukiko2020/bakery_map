@@ -2,12 +2,13 @@ import os
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core import serializers
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, TemplateView
 from django.views.generic.edit import CreateView
 
 from . import forms
-from .models import Bakery, Review
+from .models import Bakery, Favorite, Review
 
 
 class IndexView(ListView):
@@ -71,3 +72,35 @@ class CreateBakeryView(LoginRequiredMixin, CreateView):
         # context["map_src"] = f"https://maps.googleapis.com/maps/api/js?key={MAP_API_KEY}&callback=initMap"  # noqa: E501
         context["map_src"] = os.getenv("MAP_SRC")
         return context
+
+
+class FavoriteListView(LoginRequiredMixin, TemplateView):
+    template_name = "main/favorite_list.html"
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(**kwargs)
+        bakery_list = Bakery.objects.filter(
+            favorite_bakery__user=self.request.user
+        )
+        print(bakery_list)
+        context["bakery_list"] = bakery_list
+        context["favorite_json"] = serializers.serialize(
+            "json",
+            bakery_list
+        )
+        MAP_API_KEY = os.getenv("MAP_API_KEY")
+        context["map_src"] = f"https://maps.googleapis.com/maps/api/js?key={MAP_API_KEY}&callback=initMap"  # noqa: E501
+        return context
+
+
+def create_favorite(request, pk):
+    bakery = Bakery.objects.get(pk=pk)
+    existing_favorite = Favorite.objects.filter(
+        user=request.user, bakery=bakery.pk
+    )
+    if bakery and not existing_favorite:
+        print("new favorite")
+        Favorite.objects.create(user=request.user, bakery=bakery)
+    else:
+        print("お気に入り済みです")
+    return redirect(to="main:favorite_list")

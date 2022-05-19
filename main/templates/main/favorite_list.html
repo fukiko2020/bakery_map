@@ -1,0 +1,50 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block extra_style %}
+
+{% endblock extra_style %}
+
+{% block contents %}
+<div class="map__wrapper" id="map"></div>
+{% for bakery in bakery_list %}
+  <a href="{% url 'main:bakery_detail' bakery.pk %}">{{bakery.name}}</a>
+{% endfor %}
+
+{% endblock contents %}
+
+{% block javascript %}
+<script>
+  function initMap() {
+    const bakeryList = JSON.parse('{{ favorite_json|escapejs }}');
+    console.log("list:", bakeryList)
+    const markers = [];
+    const myLatLng = { lat: 35.044, lng: 135.786};
+    const map = new google.maps.Map(document.getElementById("map"), {
+      zoom: 13,
+      center: myLatLng,
+    });
+
+    console.log("aaasdf")
+    for (const bakery of bakeryList) {
+      const lat = bakery.fields.latitude;
+      const lng = bakery.fields.longitude;
+      console.log("position:", lat, lng);
+
+      // マーカー刺す
+      markers.push(new google.maps.Marker({
+        position: {
+          lat: lat,
+          lng: lng,
+        },
+        map: map,
+      }));
+    }
+
+    console.log("q");
+    // for (let i=0; i<num; i++) {
+    //   markers[i].add
+    // }
+  }
+</script>
+<script src="{{ map_src }}"></script>
+{% endblock javascript %}

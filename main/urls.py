@@ -21,4 +21,14 @@ urlpatterns = [
         views.CreateBakeryView.as_view(),
         name="create_bakery",
     ),
+    path(
+        "list/favorite",
+        views.FavoriteListView.as_view(),
+        name="favorite_list",
+    ),
+    path(
+        "create/favorite/<int:pk>",
+        views.create_favorite,
+        name="create_favorite",
+    ),
 ]
