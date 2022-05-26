@@ -34,16 +34,20 @@
       </div>
     </header>
     {% endblock header %}
-    <main class="main">
-        <div class="main-container">
-            <div class="main-container__contents">
-                {% block menubar %}
-                {% endblock menubar %}
-                {% block contents %}
-                {% endblock contents %}
-            </div>
-        </div>
-    </main>
+    <div class="main">
+      <div class="main-container">
+        {% block contents %}
+        {% endblock contents %}
+      </div>
+      <div class="sidebar pc-only">
+        {% block sidebar %}
+        {% endblock sidebar %}
+      </div>
+    </div>
+    <footer>
+      {% block footer %}
+      {% endblock footer %}
+    </footer>
     {% block javascript %}{% endblock javascript %}
 </body>
 

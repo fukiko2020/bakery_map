@@ -1,8 +1,20 @@
+$gray1: #d3d3d3;
+$gray5: #a9a9a9;
+$gray6: #696969;
 $orange8: #ffa925;
+$orange9: #ff8800;
+$redBrown: #8b0000;
 
-@mixin centerd {
+@mixin centered {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+@mixin second_headline {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 40px 0 0;
+  padding-bottom: 20px;
 }

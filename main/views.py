@@ -23,9 +23,9 @@ class IndexView(ListView):
         print(self.request.user)
         context["user"] = self.request.user
         context["bakery_list"] = bakery_list
-        # MAP_API_KEY = os.getenv("MAP_API_KEY")
-        # context["map_src"] = f"https://maps.googleapis.com/maps/api/js?key={MAP_API_KEY}&callback=initMap"  # noqa: E501
-        context["map_src"] = os.getenv("MAP_SRC")
+        MAP_API_KEY = os.getenv("MAP_API_KEY")
+        context["map_src"] = f"https://maps.googleapis.com/maps/api/js?key={MAP_API_KEY}&callback=initMap"  # noqa: E501
+        # context["map_src"] = os.getenv("MAP_SRC")
         context["bakery_list_json"] = serializers.serialize(
             "json",
             bakery_list
@@ -40,9 +40,17 @@ class BakeryDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        # MAP_API_KEY = os.getenv("MAP_API_KEY")
-        # context["map_src"] = f"https://maps.googleapis.com/maps/api/js?key={MAP_API_KEY}&callback=initMap"  # noqa: E501
-        context["map_src"] = os.getenv("MAP_SRC")
+        pk = self.kwargs["pk"]
+        context["reviews"] = Review.objects.filter(bakery=pk)
+        print(Review.objects.filter(bakery=self.kwargs["pk"]))
+        MAP_API_KEY = os.getenv("MAP_API_KEY")
+        context["map_src"] = f"https://maps.googleapis.com/maps/api/js?key={MAP_API_KEY}&callback=initMap"  # noqa: E501
+        # context["map_src"] = os.getenv("MAP_SRC")
+        is_saved = Favorite.objects.filter(bakery=pk, user=self.request.user)
+        if is_saved:
+            context["is_saved"] = True
+        else:
+            context["is_saved"] = False
         return context
 
 
@@ -68,8 +76,8 @@ class CreateBakeryView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
-        # MAP_API_KEY = os.getenv("MAP_API_KEY")
-        # context["map_src"] = f"https://maps.googleapis.com/maps/api/js?key={MAP_API_KEY}&callback=initMap"  # noqa: E501
+        MAP_API_KEY = os.getenv("MAP_API_KEY")
+        context["map_src"] = f"https://maps.googleapis.com/maps/api/js?key={MAP_API_KEY}&callback=initMap"  # noqa: E501
         context["map_src"] = os.getenv("MAP_SRC")
         return context
 
@@ -101,6 +109,8 @@ def create_favorite(request, pk):
     if bakery and not existing_favorite:
         print("new favorite")
         Favorite.objects.create(user=request.user, bakery=bakery)
+    elif existing_favorite:
+        existing_favorite.delete()
     else:
-        print("お気に入り済みです")
-    return redirect(to="main:favorite_list")
+        print("no such bakery")
+    return redirect(to="main:bakery_detail", pk=pk)

@@ -5,33 +5,47 @@
 {% endblock extra_style %}
 
 {% block contents %}
-<div class="map__wrapper" id="map"></div>
-<h1>{{ bakery }}</h1>
-<p>{{bakery.longitude }}</p>
-<p>{{bakery.latitude}}</p>
-<a href="{% url 'main:create_favorite' bakery.pk %}">お気に入りに保存</a>
+  <div class="map__wrapper" id="map"></div>
+  <h2 class="bakery-review second-headline">レビュー</h2>
+  {% for review in reviews %}
+    <div class="bakery-review__wrapper">
+      <div class="bakery-review__user">{{review.user}}</div>
+      <span class="bakery-review__date">{{review.pub_date|date:"Y.n.j"}}</span>
+      <p class="bakery-review__comment">{{review.comment}}</p>
+    </div>
+  {% endfor %}
 {% endblock contents %}
 
+{% block sidebar %}
+  <h2 class="bakery second-headline">{{ bakery }}</h2>
+  <div>{{bakery.info}}</div>
+  {% if is_saved %}
+    <a href="{% url 'main:create_favorite' bakery.pk %}"><img src="{% static 'main/img/star_orange.png' %}" alt="" class="favorite-icon"> お気に入りから削除</a>
+  {% else %}
+    <a href="{% url 'main:create_favorite' bakery.pk %}"><img src="{% static 'main/img/star_transparent.png' %}" alt="" class="favorite-icon"> お気に入りに保存</a>
+  {% endif %}
+{% endblock sidebar %}
+
 {% block javascript %}
-<script>
-  const bakeryLat = Number("{{ bakery.latitude | escapejs }}");
-  const bakeryLng = Number("{{ bakery.longitude | escapejs }}");
-  function initMap() {
-    const map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 14,
-      center: {
-        lat: bakeryLat,
-        lng: bakeryLng,
-      },
-    });
-    new google.maps.Marker({
-        position: {
+  <script>
+    const bakeryLat = Number("{{ bakery.latitude | escapejs }}");
+    const bakeryLng = Number("{{ bakery.longitude | escapejs }}");
+    function initMap() {
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 14,
+        center: {
           lat: bakeryLat,
           lng: bakeryLng,
         },
-        map: map,
-      })
-  }
-</script>
-<script src="{{ map_src }}"></script>
+      });
+      new google.maps.Marker({
+          position: {
+            lat: bakeryLat,
+            lng: bakeryLng,
+          },
+          map: map,
+        })
+    }
+  </script>
+  <script src="{{ map_src }}"></script>
 {% endblock javascript %}

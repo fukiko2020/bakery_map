@@ -6,11 +6,18 @@
 
 {% block contents %}
 <div class="map__wrapper" id="map"></div>
-{% for bakery in bakery_list %}
-  <a href="{% url 'main:bakery_detail' bakery.pk %}">{{bakery.name}}</a>
-{% endfor %}
-
 {% endblock contents %}
+
+{% block sidebar %}
+<h2 class="second-headline index-bakery">お気に入りのお店</h2>
+<div>
+  {% for bakery in bakery_list %}
+    <div class="index-bakery__item">
+      <a href="{% url 'main:bakery_detail' bakery.pk %}">{{bakery.name}}</a>
+    </div>
+  {% endfor %}
+</div>
+{% endblock sidebar %}
 
 {% block javascript %}
 <script>

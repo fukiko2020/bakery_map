@@ -5,12 +5,13 @@
 {% endblock extra_style %}
 
 {% block contents %}
-<h1>レビュー投稿</h1>
-<form action="" method="POST">
+<h1 class="second-headline">レビュー投稿</h1>
+<form action="" method="POST" class="form">
   {% csrf_token %}
-  <a href="{% url 'main:create_bakery' %}">ベーカリーを追加</a>
-  {{ form.as_p }}
-  <button type="submit">投稿する</button>
+  <a href="{% url 'main:create_bakery' %}" class="form__add-bakery">ベーカリー追加はこちら ></a>
+  <div><span class="form__field-name">店名</span>{{form.bakery}}</div>
+  <div><span class="form__field-name">本文</span>{{form.comment}}</div>
+  <button type="submit" class="form__submit">投稿する</button>
 </form>
 {% endblock contents %}
 

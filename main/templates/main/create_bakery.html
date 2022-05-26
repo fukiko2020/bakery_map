@@ -5,37 +5,43 @@
 {% endblock extra_style %}
 
 {% block contents %}
-<div class="map__wrapper" id="map"></div>
-<form action="" method="POST" name="bakeryForm">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">投稿する</button>
-</form>
+  <div class="create-bakery map__wrapper" id="map"></div>
 {% endblock contents %}
 
-{% block javascript %}
-<!-- 地図上で場所を選択すると緯度経度を自動で入力 -->
-<script>
-  function initMap() {
-    const myLatLng = { lat: 35.044, lng: 135.786}
-    const map = new google.maps.Map(document.getElementById("map"), {
-      zoom: 13,
-      center: myLatLng,
-    });
-    let pointedPosition;
-    map.addListener("click", (mapsMouseEvent) => {
-      console.log("e:", mapsMouseEvent);
-      pointedPosition = mapsMouseEvent.latLng.toString();
-      console.log("clicked:", pointedPosition)
-      pointedSplit = pointedPosition.split(",")
-      pointedLat = pointedSplit[0].slice(1);
-      pointedLng = pointedSplit[1].slice(0, pointedSplit[1].length - 1).trim();
-      const bakeryForm = document.forms.bakeryForm;
-      bakeryForm.latitude.value = pointedLat;
-      bakeryForm.longitude.value = pointedLng;
+{% block sidebar %}
+  <form action="" method="POST" name="bakeryForm" class="form">
+    {% csrf_token %}
+    <div><span class="form__field-name">店名</span>{{ form.name }}</div>
+    <div><span class="form__field-name">経度（地図上をクリックすると自動入力されます）</span>{{ form.longitude }}</div>
+    <div><span class="form__field-name">緯度（地図上をクリックすると自動入力されます）</span>{{ form.latitude }}</div>
+    <div><span class="form__field-name">詳細情報</span>{{ form.info }}</div>
+    <button type="submit" class="form__submit">投稿する</button>
+  </form>
+{% endblock sidebar %}
 
-    });
-  }
-</script>
-<script src="{{ map_src }}"></script>
+{% block javascript %}
+  <!-- 地図上で場所を選択すると緯度経度を自動で入力 -->
+  <script>
+    function initMap() {
+      const myLatLng = { lat: 35.044, lng: 135.786}
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 13,
+        center: myLatLng,
+      });
+      let pointedPosition;
+      map.addListener("click", (mapsMouseEvent) => {
+        console.log("e:", mapsMouseEvent);
+        pointedPosition = mapsMouseEvent.latLng.toString();
+        console.log("clicked:", pointedPosition)
+        pointedSplit = pointedPosition.split(",")
+        pointedLat = pointedSplit[0].slice(1);
+        pointedLng = pointedSplit[1].slice(0, pointedSplit[1].length - 1).trim();
+        const bakeryForm = document.forms.bakeryForm;
+        bakeryForm.latitude.value = pointedLat;
+        bakeryForm.longitude.value = pointedLng;
+
+      });
+    }
+  </script>
+  <script src="{{ map_src }}"></script>
 {% endblock javascript %}

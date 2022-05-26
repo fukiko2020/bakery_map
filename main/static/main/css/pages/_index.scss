@@ -4,3 +4,39 @@
 //   max-width: 90%;
 //   width: 400px;
 // }
+
+.index-review {
+  border-bottom: 1px solid $gray1;
+  &__name-user {
+    align-items: baseline;
+    display: flex;
+    margin-top: 20px;
+  }
+  &__bakery {
+    color: $redBrown;
+    font-weight: bold;
+    margin-right: 20px;
+  }
+  &__user {
+    color: $gray6;
+    font-size: 0.8rem;
+  }
+  &__date {
+    color: $gray5;
+    font-size: 0.8rem;
+    margin: 10px 0;
+  }
+  &__comment {
+    margin: 10px 0 20px;
+  }
+}
+
+.index-bakery {
+  margin-top: 0;
+
+  &__item {
+    border-bottom: 1px solid $gray1;
+    margin: 40px 0;
+    padding: 0 0 10px;
+  }
+}

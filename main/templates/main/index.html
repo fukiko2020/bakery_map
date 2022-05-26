@@ -7,26 +7,32 @@
 {% block contents %}
 <div class="map__wrapper" id="map"></div>
 
-<div class="index-review">最新のレビュー</div>
+<div class="index-review second-headline">最新のレビュー</div>
 <div>
   {% for review in review_list %}
-    <div>
-      <div>{{ review.user }}</div>
-      <div><a href="{% url 'main:bakery_detail' review.bakery.id %}">{{ review.bakery.name }}</a></div>
-      <div>{{ review.pub_date|date:"Y.n.j G:i" }}</div>
-      <div>{{ review.comment|truncatechars:50 }}</div>
-    </div>
-    <hr>
-  {% endfor %}
-</div>
+    <div class="index-review">
+      <div class="index-review__name-user">
+        <a href="{% url 'main:bakery_detail' review.bakery.id %}" class="index-review__bakery">{{ review.bakery.name }}</a>
+        <div class="index-review__user">by {{ review.user }}</div>
+      </div>
+      <div class="index-review__date">{{ review.pub_date|date:"Y.n.j" }}</div>
 
-<h2>人気のベーカリー</h2>
-<div>
-  {% for bakery in bakery_list %}
-    <div>{{ bakery }}</div>
+      <div class="index-review__comment">{{ review.comment|truncatechars:50 }}</div>
+    </div>
   {% endfor %}
 </div>
 {% endblock contents %}
+
+{% block sidebar %}
+<h2 class="second-headline index-bakery">人気のベーカリー</h2>
+<div>
+  {% for bakery in bakery_list %}
+    <div class="index-bakery__item">
+      <a href="{% url 'main:bakery_detail' bakery.pk %}">{{bakery.name}}</a>
+    </div>
+  {% endfor %}
+</div>
+{% endblock sidebar %}
 
 {% block javascript %}
 <script>
